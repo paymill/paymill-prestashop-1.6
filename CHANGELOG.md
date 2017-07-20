@@ -1,3 +1,8 @@
+## 2.3.0 - 2017-07-19
+* Remove CURLOPT_CAINFO - path to Certificate Authority (CA) bundle
+* Remove paymill.crt
+* Change user agent info to "Paymill-Prestashop/2.3.0"
+
 ## 2.2.0 - 2015-07-21
 * add ssl support for the payment form page
 * Integration of PayFrame to enable use of SAQ A for easier PCI DSS 3.0 compliance
