@@ -30,9 +30,9 @@
     <div class="debit col-md-8 col-md-push-2">
         <input type="hidden" name="payment" value="{$payment|escape:'htmlall':'UTF-8'}">
         <div id="paymill-error" class="error center" style="display:none;"></div>
+        {if $payment == "creditcard" }
         <div class="row">
             <div class="cc-logos col-md-12">
-            {if $payment == "creditcard"}
                 {if $acceptedBrandsDecoded.visa}<img src="{$modul_base|escape:'html':'UTF-8'}img/32x20_visa.png" alt="visa">{/if}
                 {if $acceptedBrandsDecoded.mastercard}<img src="{$modul_base|escape:'html':'UTF-8'}img/32x20_mastercard.png" alt="mastercard"> {/if}
                 {if $acceptedBrandsDecoded.amex}<img src="{$modul_base|escape:'html':'UTF-8'}img/32x20_amex.png" alt="amex"> {/if}
@@ -46,43 +46,50 @@
                 {if $acceptedBrandsDecoded.maestro}<img src="{$modul_base|escape:'html':'UTF-8'}img/32x20_maestro.png" alt="maestro"> {/if}
             </div>
         </div>
+        {/if}
         <div class="row">
             <div class="col-md-12">
-            <fieldset>
-                <div class="form-group">
-                <label for="paymill-card-holder">{l s='Cardholder' mod='pigmbhpaymill'}*</label>
-                <input id="paymill-card-holder" type="text" autocomplete="off" class="form-control" value="{if $prefilledFormData.card_holder}{$prefilledFormData.card_holder|escape:'htmlall':'UTF-8'}{else}{$customer|escape:'htmlall':'UTF-8'}{/if}"/>
-                </div>
-                <div class="form-group">
-                <label for="paymill-card-number">{l s='Creditcard-number' mod='pigmbhpaymill'}*</label>
-                <input id="paymill-card-number" type="text" autocomplete="off" class="form-control" value="{if $prefilledFormData.last4}****************{$prefilledFormData.last4|escape:'htmlall'}{/if}" />
-                </div>
-                <div class="form-group"  class="col-md-6">
-                <label for="paymill-card-expirydate">{l s='Valid until' mod='pigmbhpaymill'}*</label>
-                <input id="paymill-card-expirydate" type="text" placeholder="MM/YYYY" autocomplete="off" class="form-control" value="{if $prefilledFormData.expire_date}{$prefilledFormData.expire_date|escape:'htmlall':'UTF-8'}{/if}">
-                </div>
-                <div class="form-group" class="col-md-6">
-                <label for="paymill-card-cvc">{l s='CVC' mod='pigmbhpaymill'}*<span class="paymill-tooltip" title="{l s='What is a CVV/CVC number? Prospective credit cards will have a 3 to 4-digit number, usually on the back of the card. It ascertains that the payment is carried out by the credit card holder and the card account is legitimate. On Visa the CVV (Card Verification Value) appears after and to the right of your card number. Same goes for Mastercardâ€™s CVC (Card Verfication Code), which also appears after and to the right of  your card number, and has 3-digits. Diners Club, Discover, and JCB credit and debit cards have a three-digit card security code which also appears after and to the right of your card number. The American Express CID (Card Identification Number) is a 4-digit number printed on the front of your card. It appears above and to the right of your card number. On Maestro the CVV appears after and to the right of your number. If you donâ€™t have a CVV for your Maestro card you can use 000.' mod='pigmbhpaymill'}">?</span></label>
-                <input id="paymill-card-cvc" type="text" autocomplete="off" class="form-control" value="{if $prefilledFormData.last4}***{/if}" />
-                </div>
-            </fieldset>
+            {if $payment == "creditcard"}
+                {if $iframe_active }
+                    <div id='paymill_form_container'></div>
+                    {include file="$tpl_dir../../modules/pigmbhpaymill/views/templates/front/paymill_checkout_creditcard_saq.tpl"}
+                {else}
+                    <fieldset>
+                        <div class="form-group">
+                        <label for="paymill-card-holder">{l s='Cardholder' mod='pigmbhpaymill'}*</label>
+                        <input id="paymill-card-holder" type="text" autocomplete="off" class="form-control" value="{if $prefilledFormData.card_holder}{$prefilledFormData.card_holder|escape:'htmlall':'UTF-8'}{else}{$customer|escape:'htmlall':'UTF-8'}{/if}"/>
+                        </div>
+                        <div class="form-group">
+                        <label for="paymill-card-number">{l s='Creditcard-number' mod='pigmbhpaymill'}*</label>
+                        <input id="paymill-card-number" type="text" autocomplete="off" class="form-control" value="{if $prefilledFormData.last4}****************{$prefilledFormData.last4|escape:'htmlall'}{/if}" />
+                        </div>
+                        <div class="form-group"  class="col-md-6">
+                        <label for="paymill-card-expirydate">{l s='Valid until' mod='pigmbhpaymill'}*</label>
+                        <input id="paymill-card-expirydate" type="text" placeholder="MM/YYYY" autocomplete="off" class="form-control" value="{if $prefilledFormData.expire_date}{$prefilledFormData.expire_date|escape:'htmlall':'UTF-8'}{/if}">
+                        </div>
+                        <div class="form-group" class="col-md-6">
+                        <label for="paymill-card-cvc">{l s='CVC' mod='pigmbhpaymill'}*<span class="paymill-tooltip" title="{l s='What is a CVV/CVC number? Prospective credit cards will have a 3 to 4-digit number, usually on the back of the card. It ascertains that the payment is carried out by the credit card holder and the card account is legitimate. On Visa the CVV (Card Verification Value) appears after and to the right of your card number. Same goes for Mastercardâ€™s CVC (Card Verfication Code), which also appears after and to the right of  your card number, and has 3-digits. Diners Club, Discover, and JCB credit and debit cards have a three-digit card security code which also appears after and to the right of your card number. The American Express CID (Card Identification Number) is a 4-digit number printed on the front of your card. It appears above and to the right of your card number. On Maestro the CVV appears after and to the right of your number. If you donâ€™t have a CVV for your Maestro card you can use 000.' mod='pigmbhpaymill'}">?</span></label>
+                        <input id="paymill-card-cvc" type="text" autocomplete="off" class="form-control" value="{if $prefilledFormData.last4}***{/if}" />
+                        </div>
+                    </fieldset>
+                {/if}
             {elseif $payment == "debit"}
-            <fieldset>
-                <div class="form-group">
-                <label for="paymill_iban" class="field-left">IBAN* / {l s='Accountnumber' mod='pigmbhpaymill'}*</label>
-                <input id="paymill_iban" autocomplete="off" class="form-control" type="text" class="field-left" value="{if $prefilledFormData.iban}{$prefilledFormData.iban|escape:'htmlall'}{else}{if $prefilledFormData.account}{$prefilledFormData.account|escape:'htmlall'}{/if}{/if}" />
-                </div>
-                <div class="form-group">
-                <label for="paymill_bic" class="field-right">BIC* / {l s='Banknumber' mod='pigmbhpaymill'}*</label>
-                <input id="paymill_bic" type="text" autocomplete="off" class="form-control" value="{if $prefilledFormData.bic}{$prefilledFormData.bic|escape:'htmlall'}{else}{if $prefilledFormData.code}{$prefilledFormData.code|escape:'htmlall'}{/if}{/if}" />
-                </div>
-            </fieldset>
-            <fieldset>
-                <div class="form-group">
-                <label for="paymill_accountholder" class="field-full">{l s='Accountholder' mod='pigmbhpaymill'}*</label>
-                <input id="paymill_accountholder" type="text"  autocomplete="off" class="form-control" value="{if $prefilledFormData.holder}{$prefilledFormData.holder|escape:'htmlall':'UTF-8'}{else}{$customer|escape:'htmlall':'UTF-8'}{/if}"/>
-                </div>
-            </fieldset>
+                <fieldset>
+                    <div class="form-group">
+                    <label for="paymill_iban" class="field-left">IBAN* / {l s='Accountnumber' mod='pigmbhpaymill'}*</label>
+                    <input id="paymill_iban" autocomplete="off" class="form-control" type="text" class="field-left" value="{if $prefilledFormData.iban}{$prefilledFormData.iban|escape:'htmlall'}{else}{if $prefilledFormData.account}{$prefilledFormData.account|escape:'htmlall'}{/if}{/if}" />
+                    </div>
+                    <div class="form-group">
+                    <label for="paymill_bic" class="field-right">BIC* / {l s='Banknumber' mod='pigmbhpaymill'}*</label>
+                    <input id="paymill_bic" type="text" autocomplete="off" class="form-control" value="{if $prefilledFormData.bic}{$prefilledFormData.bic|escape:'htmlall'}{else}{if $prefilledFormData.code}{$prefilledFormData.code|escape:'htmlall'}{/if}{/if}" />
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group">
+                    <label for="paymill_accountholder" class="field-full">{l s='Accountholder' mod='pigmbhpaymill'}*</label>
+                    <input id="paymill_accountholder" type="text"  autocomplete="off" class="form-control" value="{if $prefilledFormData.holder}{$prefilledFormData.holder|escape:'htmlall':'UTF-8'}{else}{$customer|escape:'htmlall':'UTF-8'}{/if}"/>
+                    </div>
+                </fieldset>
             {/if}
 
             <p class="description">

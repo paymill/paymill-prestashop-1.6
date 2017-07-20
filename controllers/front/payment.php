@@ -42,7 +42,7 @@ class PigmbhpaymillPaymentModuleFrontController extends ModuleFrontController {
 			$valid_payments[] = 'creditcard';
 		if (!in_array(Tools::getValue('payment'), $valid_payments))
 			Tools::redirectLink($this->context->link->getPageLink('order', true, null, array('step'=>'1')));
-		
+
 		$db_data = $this->getPaymillUserData();
 
 		$this->updatePaymillClient($db_data);
@@ -78,7 +78,8 @@ class PigmbhpaymillPaymentModuleFrontController extends ModuleFrontController {
 			'customer' => $this->context->customer->firstname.' '.$this->context->customer->lastname,
 			'prefilledFormData' => $this->updatePaymillPayment($db_data),
 			'acceptedBrands' => Configuration::get('PIGMBH_PAYMILL_ACCEPTED_BRANDS'),
-			'acceptedBrandsDecoded' => $brands
+			'acceptedBrandsDecoded' => $brands,
+            'iframe_active' => (int)Configuration::get('PIGMBH_PAYMILL_PCI') == 0 // SAQ A -> iframe
 		);
 
 		$this->context->smarty->assign($data);

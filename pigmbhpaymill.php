@@ -45,8 +45,8 @@ class PigmbhPaymill extends PaymentModule {
 	{
 		$this->name = 'pigmbhpaymill';
 		$this->tab = 'payments_gateways';
-		$this->version = '2.1.6';
-		$this->author = 'PayIntelligent GmbH';
+		$this->version = '2.2.1';
+		$this->author = 'PAYMILL GmbH';
 		$this->need_instance = 1;
 		$this->currencies = true;
 		$this->currencies_mode = 'checkbox';
@@ -163,10 +163,11 @@ class PigmbhPaymill extends PaymentModule {
 		if ($this->name === Tools::getValue('module'))
 		{
 			$this->context->controller->addCSS(__PS_BASE_URI__.'modules/pigmbhpaymill/css/paymill_styles.css');
+			$this->context->controller->addCSS('https://fonts.googleapis.com/css?family=Open+Sans:400,300,700');
 			if (_PS_VERSION_ < '1.6')
 				$this->context->controller->addCSS(__PS_BASE_URI__.'modules/pigmbhpaymill/css/paymill_checkout_1_5.css');
 
-			$this->context->controller->addJS('https://bridge.paymill.com/');
+            $this->context->controller->addJS('https://bridge.paymill.com/dss3');
 			$this->context->controller->addJS(__PS_BASE_URI__.'modules/pigmbhpaymill/js/BrandDetection.js');
 			$this->context->controller->addJS(__PS_BASE_URI__.'modules/pigmbhpaymill/js/Iban.js');
 			$this->context->controller->addJS(__PS_BASE_URI__.'modules/pigmbhpaymill/js/PaymillCheckout.js');
@@ -220,17 +221,17 @@ class PigmbhPaymill extends PaymentModule {
                     $payments[] = array(
                         'cta_text' => $this->l('Paymill Directdebit'),
                         'logo' => Media::getMediaPath(dirname(__FILE__).'/img/icon-hook.png'),
-                        'action' => $this->context->link->getModuleLink($this->name, 'payment', array('payment' => 'debit'))
+                        'action' => $this->context->link->getModuleLink($this->name, 'payment', array('payment' => 'debit'), true)
                     );
                 }
                 if(Configuration::get('PIGMBH_PAYMILL_CREDITCARD') === 'on'){
                     $payments[] = array(
                         'cta_text' => $this->l('Paymill Creditcard'),
                         'logo' => Media::getMediaPath(dirname(__FILE__).'/img/icon-hook.png'),
-                        'action' => $this->context->link->getModuleLink($this->name, 'payment', array('payment' => 'creditcard'))
+                        'action' => $this->context->link->getModuleLink($this->name, 'payment', array('payment' => 'creditcard'), true)
                     );
                 }
-                    
+
                 return $payments;
 	}
 
@@ -241,7 +242,7 @@ class PigmbhPaymill extends PaymentModule {
 	{
 		if (!$this->active && Tools::getValue('paymillerror') != 1)
 			return;
-			
+
 		$this->context->controller->addCSS(__PS_BASE_URI__.'modules/pigmbhpaymill/css/paymill_styles.css');
 
 		$this->context->smarty->assign(array(
@@ -344,6 +345,7 @@ class PigmbhPaymill extends PaymentModule {
 		$new_config->setAccpetedCreditCards($accepted_brands_result);
 		$new_config->setDebitDays(Tools::getValue('debit_days', '7'));
 		$new_config->setCapture(Tools::getValue('capture_option', 'OFF'));
+		$new_config->setPci(Tools::getValue('pci',0));
 		$this->configuration_handler->updateConfiguration($new_config);
 		$this->registerPaymillWebhook($new_config->getPrivateKey());
 	}
@@ -413,6 +415,7 @@ class PigmbhPaymill extends PaymentModule {
 				'header' => dirname(__FILE__).'/views/templates/admin/paymillheader.tpl',
 				'config' => dirname(__FILE__).'/views/templates/admin/paymillconfig.tpl',
 				'log' => dirname(__FILE__).'/views/templates/admin/paymilllog.tpl',
+				'img' => _PS_BASE_URL_.__PS_BASE_URI__.'modules/pigmbhpaymill/img',
 			),
 			'header' => array(
 				'paymill_description' => 'Online payments made easy'
@@ -429,6 +432,7 @@ class PigmbhPaymill extends PaymentModule {
 				'fastcheckout' => $this->getCheckboxState($configuration_model->getFastcheckout()),
 				'accepted_brands' => $configuration_model->getAccpetedCreditCards(),
 				'capture_option' => $this->getCheckboxState($configuration_model->getCapture()),
+				'pci' => $configuration_model->getPci()
 			),
 			'logging' => array(
 				'data' => $logdata,

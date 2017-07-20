@@ -188,7 +188,7 @@ class PigmbhpaymillValidationModuleFrontController extends ModuleFrontController
 		$this->payment_processor->setCurrency(Tools::strtolower($this->iso_currency));
 		$this->payment_processor->setName($this->context->customer->lastname.', '.$this->context->customer->firstname);
 		$this->payment_processor->setEmail($this->context->customer->email);
-		$this->payment_processor->setDescription('');
+		$this->payment_processor->setDescription((string)time());
 		$this->payment_processor->setLogger($this);
 		$this->payment_processor->setSource(Configuration::get('PIGMBH_PAYMILL_VERSION').'_prestashop_core_'._PS_VERSION_);
 

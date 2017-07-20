@@ -57,6 +57,13 @@
     paymillcheckout.currency = '{$currency_iso|escape:'html':'UTF-8'}';
     paymillcheckout.prefilled = new Array();
     paymillcheckout.submitted = false;
+    paymillcheckout.iframe = new Object();
+    paymillcheckout.iframe.options = {
+        lang: '{l s='en' mod='pigmbhpaymill'}'
+    };
+    paymillcheckout.iframe.active = '{$iframe_active|escape:'intval'}';
+    paymillcheckout.iframe.create = false;
+    paymillcheckout.iframe.changefastcheckout = false;
 </script>
 
 {if $use_backward_compatible_checkout}

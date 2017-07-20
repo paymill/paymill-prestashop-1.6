@@ -1,24 +1,56 @@
+#paymill-modul h4{
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    line-height: 15.4px;
+    font-weight: 700;
+}
+
+#paymill_getstarted {
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+}
+
+#paymill_getstarted .btn-primary {
+    color: #fff;
+    background-color: #f05000;
+    border-color: #f05000;
+    -webkit-box-shadow: 0 1px 0 #be4000;
+    box-shadow: 0 1px 0 #be4000;
+    -webkit-transition: color .2s linear, background .2s linear, border .2s linear;
+    -o-transition: color .2s linear, background .2s linear, border .2s linear;
+    transition: color .2s linear, background .2s linear, border .2s linear;
+}
+
+#paymill_getstarted .btn-primary:focus,
+#paymill_getstarted .btn-primary:hover,
+#paymill_getstarted .btn-primary:active {
+    border-color: #bd3f00;
+    background-color: #bd3f00;
+}
+
 div.row p.payment_module a.creditcard {
-      background: url('../img/icon-hook.png') 15px 15px no-repeat #fbfbfb; }
+    background: url('../img/icon-hook.png') 15px 15px no-repeat #fbfbfb; }
 div.row p.payment_module a.elv {
-      background: url('../img/icon-hook.png') 15px 15px no-repeat #fbfbfb; }
+    background: url('../img/icon-hook.png') 15px 15px no-repeat #fbfbfb; }
 div.row p.payment_module a.creditcard:after, p.payment_module a.elv:after {
-      display: block;
-      content: "\f054";
-      position: absolute;
-      right: 15px;
-      margin-top: -11px;
-      top: 50%;
-      font-family: "FontAwesome";
-      font-size: 25px;
-      height: 22px;
-      width: 14px;
-      color: #777777; }
+    display: block;
+    content: "\f054";
+    position: absolute;
+    right: 15px;
+    margin-top: -11px;
+    top: 50%;
+    font-family: "FontAwesome";
+    font-size: 25px;
+    height: 22px;
+    width: 14px;
+    color: #777777; }
 div.row p.payment_module a:hover {
-      background-color: #f6f6f6; }
+    background-color: #f6f6f6; }
 div.row p.payment_module a span {
-      font-weight: bold;
-      color: #777777; }
+    font-weight: bold;
+    color: #777777; }
 
 .paymill-tooltip {
     margin-left: 3px;

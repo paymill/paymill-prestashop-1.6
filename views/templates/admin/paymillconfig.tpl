@@ -45,13 +45,13 @@
             <input type="checkbox" name="capture_option" {$config.capture_option|escape:'htmlall':'UTF-8'} />
         </div>
         <div class="clear"></div>
-        
+
         <label>{l s='Activate fastCheckout' mod='pigmbhpaymill'}</label>
         <div class="margin-form">
             <input type="checkbox" name="fastcheckout" {$config.fastcheckout|escape:'htmlall':'UTF-8'} />
         </div>
         <div class="clear"></div>
-        
+
         <label>{l s='Activate debugging' mod='pigmbhpaymill'}</label>
         <div class="margin-form">
             <input type="checkbox" name="debug" {$config.debug|escape:'htmlall':'UTF-8'} />
@@ -73,6 +73,15 @@
         <label>{l s='Public Key' mod='pigmbhpaymill'}</label>
         <div class="margin-form">
             <input type="text" class="paymill_config_text" name="publickey" value="{$config.publickey|escape:'htmlall':'UTF-8'}" />
+        </div>
+        <div class="clear"></div>
+        
+        <label>{l s='Payment form' mod='pigmbhpaymill'}</label>
+        <div class="margin-form">
+            <select name="pci">
+                <option value="0" {if $config.pci == 0}selected{/if}>{l s='embedded PayFrame (requires PCI SAQ A)' mod='pigmbhpaymill'}</option>
+                <option value="1" {if $config.pci == 1}selected{/if}>{l s='direct integration (requires PCI SAQ A-EP)' mod='pigmbhpaymill'}</option>
+            </select>
         </div>
         <div class="clear"></div>
 

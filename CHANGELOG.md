@@ -1,3 +1,8 @@
+## 2.2.0 - 2015-07-21
+* add ssl support for the payment form page
+* Integration of PayFrame to enable use of SAQ A for easier PCI DSS 3.0 compliance
+* transaction description initially set
+
 ## 2.1.0 - 2014-10-01
 * added compatibility for EU-Legal(https://github.com/EU-Legal/modules)
 * added refund within shop-administration
